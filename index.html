@@ -91,10 +91,9 @@
   .hero .container{position:relative;z-index:2}
   /* خيوط الألياف الضوئية المتحركة (canvas) */
   .fibers{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-  .fibers canvas{display:block;width:100%;height:100%}
+  .fibers canvas{display:block;width:100%;height:100%;filter:blur(1.2px);opacity:.85;will-change:transform}
   .hero-glass{position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:linear-gradient(135deg,rgba(47,126,232,.07) 0%,rgba(18,50,95,.04) 50%,rgba(242,101,34,.06) 100%);
-    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(5px)}
+    background:linear-gradient(135deg,rgba(47,126,232,.07) 0%,rgba(18,50,95,.04) 50%,rgba(242,101,34,.06) 100%);}
   .hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:24px;align-items:center;width:100%;margin:0 auto}
   .hero-text{text-align:right;padding:20px 0}
   .hero .tags,.hero .actions{justify-content:flex-start}
@@ -102,17 +101,20 @@
   /* ===== الأجهزة (لابتوب + تابلت + هاتف) ===== */
   .device-side{position:relative;height:560px;top:-40px} /* غيّر -40px لرفع/إنزال الأجهزة */
   .device-glow{position:absolute;width:620px;height:620px;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;
-    background:radial-gradient(circle,rgba(47,126,232,.32) 0%,rgba(242,101,34,.12) 40%,transparent 62%);filter:blur(36px);animation:glowPulse 6s ease-in-out infinite}
+    background:radial-gradient(circle,rgba(47,126,232,.28) 0%,rgba(47,126,232,.16) 25%,rgba(242,101,34,.08) 45%,transparent 68%);will-change:transform,opacity;animation:glowPulse 6s ease-in-out infinite}
   @keyframes glowPulse{0%,100%{opacity:.8;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
   .laptop-wrap{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;width:min(460px,100%);animation:floatA 6s ease-in-out infinite}
   .tablet-wrap{position:absolute;bottom:6%;left:2%;z-index:2;width:190px;animation:floatB 7s ease-in-out .5s infinite}
   .phone-wrap{position:absolute;bottom:3%;right:4%;z-index:4;width:120px;animation:floatB 5s ease-in-out 1s infinite}
-  .laptop-wrap svg,.tablet-wrap svg,.phone-wrap svg{width:100%;height:auto;filter:drop-shadow(0 30px 40px rgba(8,24,51,.45))}
+  .laptop-wrap svg,.tablet-wrap svg,.phone-wrap svg{width:100%;height:auto}
+  .tablet-wrap svg,.phone-wrap svg{filter:drop-shadow(0 24px 30px rgba(8,24,51,.4))}
+  .laptop-wrap::after{content:"";position:absolute;left:8%;right:8%;bottom:-6px;height:40px;border-radius:50%;background:radial-gradient(ellipse,rgba(8,24,51,.45),transparent 70%);z-index:-1}
+  .laptop-wrap,.tablet-wrap,.phone-wrap{will-change:transform}
   @keyframes floatA{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-14px)}}
   @keyframes floatB{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-  .orbit{position:absolute;top:50%;left:50%;width:1px;height:1px;z-index:1}
+  .orbit{position:absolute;top:50%;left:50%;width:1px;height:1px;z-index:1;will-change:transform}
   .orbit-icon{position:absolute;top:0;left:0;width:46px;height:46px;margin:-23px;border-radius:12px;display:grid;place-items:center;
-    background:rgba(255,255,255,.8);border:1px solid rgba(47,126,232,.35);box-shadow:0 8px 24px rgba(18,50,95,.18);backdrop-filter:blur(8px);color:var(--navy);font-weight:800;font-size:12px;font-family:"IBM Plex Mono",monospace}
+    background:rgba(255,255,255,.8);border:1px solid rgba(47,126,232,.35);box-shadow:0 8px 24px rgba(18,50,95,.18);color:var(--navy);font-weight:800;font-size:12px;font-family:"IBM Plex Mono",monospace}
   .orbit-2 .orbit-icon,.orbit-4 .orbit-icon{color:var(--orange);border-color:rgba(242,101,34,.4)}
   .orbit-1{animation:orbit1 20s linear infinite}.orbit-2{animation:orbit2 25s linear infinite}.orbit-3{animation:orbit3 30s linear infinite}.orbit-4{animation:orbit4 22s linear infinite}
   @keyframes orbit1{from{transform:rotate(0) translateX(235px) rotate(0)}to{transform:rotate(360deg) translateX(235px) rotate(-360deg)}}
@@ -120,7 +122,8 @@
   @keyframes orbit3{from{transform:rotate(180deg) translateX(225px) rotate(-180deg)}to{transform:rotate(540deg) translateX(225px) rotate(-540deg)}}
   @keyframes orbit4{from{transform:rotate(270deg) translateX(245px) rotate(-270deg)}to{transform:rotate(630deg) translateX(245px) rotate(-630deg)}}
   .hero .lead{margin-inline:0}
-  .hero{padding:36px 0 44px}
+  .hero{padding:0;min-height:calc(100vh - 76px);display:flex;align-items:center}
+  .hero .container{width:100%}
   .hero .tags{display:flex;gap:8px;margin-bottom:16px}
   .hero .tags span{font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--tint-blue);color:var(--navy)}
   .hero .tags span.o{background:var(--tint-orange);color:var(--red)}
@@ -134,157 +137,10 @@
   .hero .lead{margin:18px 0 28px;max-width:560px}
   .hero .actions{display:flex;gap:10px;flex-wrap:wrap}
 
-  .blob{position:absolute;border-radius:50%;filter:blur(38px);opacity:.55;pointer-events:none;z-index:0}
+  .blob{position:absolute;border-radius:50%;filter:blur(38px);opacity:.55;pointer-events:none;z-index:0;will-change:transform;transform:translateZ(0)}
   .blob.b1{width:200px;height:200px;background:#ffb08a;right:26%;top:34%}
   .blob.b2{width:160px;height:160px;background:#bfe3d8;left:6%;top:-30px}
   .blob.b3{width:220px;height:220px;background:#cfe0ff;right:6%;bottom:-40px}
-
-  /* ============ قسم داكن: الأنظمة ============ */
-  .systems{background:var(--navy-2);color:#fff;padding:90px 0 110px;position:relative;overflow:hidden}
-  .systems::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:26px 26px;mask-image:linear-gradient(to bottom,#000,transparent 70%)}
-  .systems .container{position:relative}
-  .systems .head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:44px}
-  .systems h2{color:#fff}
-  .systems .head p{color:#b4c3e0;font-size:15px;max-width:440px}
-  .systems .head .tools{display:flex;gap:8px;align-items:center;justify-content:flex-start}
-  .systems .kicker{background:rgba(255,255,255,.1);color:#fff}
-  .sys-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
-  .sys{background:#fff;color:var(--ink);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-lg);transition:.25s;display:flex;flex-direction:column}
-  .sys:hover{transform:translateY(-6px)}
-  .sys .img{height:170px;position:relative;background:linear-gradient(135deg,var(--navy),#1a4a8f)}
-  .sys:nth-child(2) .img{background:linear-gradient(135deg,var(--orange),var(--red))}
-  .sys:nth-child(3) .img{background:linear-gradient(135deg,var(--blue),var(--navy))}
-  .sys .img .pat{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(circle at 70% 30%,#000,transparent 70%)}
-  .sys .img .big{position:absolute;right:20px;bottom:10px;font-size:64px;font-weight:900;color:rgba(255,255,255,.18);line-height:1}
-  .sys .img .ic{position:absolute;right:18px;top:18px;width:44px;height:44px;border-radius:12px;background:#fff;display:grid;place-items:center;box-shadow:var(--shadow)}
-  .sys .img .ic svg{width:22px;height:22px;stroke:var(--navy);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .sys:nth-child(2) .img .ic svg{stroke:var(--orange)}
-  .sys .body{padding:22px 22px 24px;flex:1;display:flex;flex-direction:column}
-  .sys h3{font-size:20px;margin-bottom:6px}
-  .sys p{color:var(--ink-2);font-size:14px;flex:1}
-  .sys .more{margin-top:16px;font-weight:700;color:var(--orange);font-size:14px}
-  .sys.featured{transform:translateY(-22px)}
-  .sys.featured:hover{transform:translateY(-28px)}
-  .sys-more{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
-  .sys-more span{font-size:13px;font-weight:700;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.2);color:#d9e4f7}
-
-  /* ============ الاسم الموثوق (فيديو + قائمة) ============ */
-  .trusted{padding:100px 0;background:linear-gradient(180deg,#fff,var(--bg-2))}
-  .trusted .grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-  .trusted .list{margin-top:26px;display:flex;flex-direction:column;gap:14px}
-  .trusted .list li{display:flex;gap:14px;align-items:flex-start;font-size:15px;color:var(--ink-2)}
-  .trusted .list li b{color:var(--ink);display:block;font-size:16px}
-  .trusted .list .num{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center;flex-shrink:0;margin-top:3px}
-  .trusted .list li:nth-child(even) .num{background:var(--orange)}
-  .video{position:relative;border-radius:var(--r-lg);background:linear-gradient(135deg,var(--navy),var(--navy-2));min-height:380px;box-shadow:var(--shadow-lg);overflow:hidden;color:#fff;padding:26px}
-  .video::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 70%,rgba(47,126,232,.5),transparent 55%),radial-gradient(circle at 80% 20%,rgba(242,101,34,.45),transparent 50%)}
-  .video > *{position:relative;z-index:1}
-  .video .play{position:absolute;top:22px;left:22px;width:62px;height:62px;border-radius:50%;background:var(--orange);display:grid;place-items:center;box-shadow:0 10px 30px rgba(242,101,34,.5);animation:pulse 2.4s infinite;cursor:pointer}
-  .video .play::before{content:'';border-style:solid;border-width:10px 0 10px 16px;border-color:transparent transparent transparent #fff;margin-right:-4px}
-  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(242,101,34,.5)}60%{box-shadow:0 0 0 18px rgba(242,101,34,0)}}
-  .video .quote{position:absolute;right:26px;bottom:70px;left:26px;background:#fff;color:var(--navy);border-radius:14px;padding:18px 20px;font-weight:800;font-size:20px;line-height:1.4}
-  .video .who{position:absolute;bottom:20px;left:26px;display:flex;align-items:center;gap:10px;font-size:13px}
-  .video .who i{width:36px;height:36px;border-radius:50%;background:var(--orange);display:grid;place-items:center;font-weight:900;font-size:14px}
-  .video .who small{display:block;color:#b4c3e0;font-size:11px}
-
-  /* ============ عقدين (مميزات + بطاقة) ============ */
-  .why{padding:100px 0;background:var(--bg-2)}
-  .why .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
-  .feat{display:flex;flex-direction:column;gap:14px;margin-top:8px}
-  .feat li{display:flex;gap:14px;background:#fff;border-radius:var(--r);padding:16px 18px;border:1px solid var(--line);transition:.2s}
-  .feat li:hover{box-shadow:var(--shadow);border-color:transparent}
-  .feat .n{width:36px;height:36px;border-radius:10px;background:var(--tint-blue);color:var(--navy);font-weight:800;display:grid;place-items:center;flex-shrink:0;font-size:13px}
-  .feat li:nth-child(even) .n{background:var(--tint-orange);color:var(--red)}
-  .feat h4{font-size:16px;margin-bottom:2px}
-  .feat p{font-size:14px;color:var(--ink-2)}
-  .poster{border-radius:var(--r-lg);background:linear-gradient(160deg,var(--blue),var(--navy));min-height:460px;position:relative;overflow:hidden;color:#fff;padding:26px;box-shadow:var(--shadow-lg)}
-  .poster .giant{position:absolute;left:-10px;bottom:-30px;font-size:260px;font-weight:900;line-height:1;color:rgba(255,255,255,.12)}
-  .poster .txt{position:absolute;right:26px;bottom:34px;font-size:44px;font-weight:900;line-height:1.1}
-  .poster .txt span{display:block;font-size:20px;font-weight:700;color:#cfe0ff}
-  .poster .brand-mini{font-weight:900;font-size:16px}
-  .poster .brand-mini small{display:block;font-size:10px;font-weight:500;color:#cfe0ff;letter-spacing:.06em}
-
-  /* ============ الإنجازات (تبويبات) ============ */
-  .ach{padding:100px 0}
-  .ach .grid{display:grid;grid-template-columns:320px 1fr;gap:28px;margin-top:40px}
-  .tabs{display:flex;flex-direction:column;gap:8px}
-  .tab{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;font-weight:700;font-size:15px;color:var(--ink-2);cursor:pointer;border:1px solid var(--line);background:#fff;transition:.2s}
-  .tab i{width:30px;height:30px;border-radius:8px;background:var(--tint-blue);display:grid;place-items:center;color:var(--navy);font-size:12px;font-weight:900}
-  .tab:hover{border-color:var(--navy)}
-  .tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-  .tab.on i{background:var(--orange);color:#fff}
-  .panel{display:none;grid-template-columns:1fr 1.1fr;gap:22px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;box-shadow:var(--shadow)}
-  .panel.on{display:grid}
-  .panel .pic{border-radius:14px;min-height:240px;background:linear-gradient(135deg,var(--navy),var(--blue));position:relative;overflow:hidden}
-  .panel .pic::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);background-size:24px 24px;mask-image:radial-gradient(circle at 50% 50%,#000,transparent 75%)}
-  .panel .pic b{position:absolute;right:18px;bottom:14px;color:#fff;font-size:48px;font-weight:900}
-  .panel h3{font-size:22px;margin-bottom:8px}
-  .panel p{color:var(--ink-2);font-size:14px}
-  .panel ul{margin-top:14px;display:flex;flex-direction:column;gap:8px}
-  .panel ul li{font-size:14px;color:var(--ink);display:flex;gap:8px;align-items:center}
-  .panel ul li::before{content:'✓';width:20px;height:20px;border-radius:50%;background:var(--tint-orange);color:var(--red);font-size:11px;display:grid;place-items:center;font-weight:900}
-
-  /* ============ الباقات ============ */
-  .plans{padding:100px 0;background:var(--bg-2)}
-  .plan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px;align-items:start}
-  .plan{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 22px;position:relative;transition:.2s}
-  .plan:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
-  .plan .tier{font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.08em}
-  .plan .name{display:flex;align-items:baseline;gap:6px;margin:6px 0 4px}
-  .plan .name b{font-size:44px;font-weight:900;color:var(--navy);line-height:1}
-  .plan .name span{font-size:13px;color:var(--ink-3);font-weight:700}
-  .plan .sub{font-weight:800;font-size:15px;color:var(--ink)}
-  .plan .desc{font-size:13px;color:var(--ink-2);margin:6px 0 16px;min-height:44px}
-  .plan .specs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--bg-2);border-radius:12px;padding:12px;margin-bottom:14px}
-  .plan .specs div{font-size:12px;color:var(--ink-2)}
-  .plan .specs div b{display:block;color:var(--navy);font-size:15px}
-  .plan ul{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--ink-2);margin-bottom:18px}
-  .plan ul li::before{content:'• ';color:var(--orange);font-weight:900}
-  .plan .price{display:flex;align-items:baseline;gap:6px;justify-content:flex-start;margin-bottom:14px}
-  .plan .price b{font-size:28px;font-weight:900;color:var(--navy)}
-  .plan .price span{font-size:12px;color:var(--ink-3)}
-  .plan .btn{width:100%;justify-content:center}
-  .plan .note{font-size:11px;color:var(--ink-3);text-align:center;margin-top:8px}
-  .plan.pop{border:2px solid var(--orange);background:linear-gradient(180deg,var(--tint-orange),#fff 40%);transform:translateY(-10px)}
-  .plan.pop:hover{transform:translateY(-14px)}
-  .plan.pop .ribbon{position:absolute;top:-1px;right:50%;transform:translate(50%,-50%);background:var(--orange);color:#fff;font-size:11px;font-weight:800;padding:4px 14px;border-radius:999px;letter-spacing:.06em}
-  .plan.pop .name b,.plan.pop .price b{color:var(--orange)}
-
-  /* ============ تواصل + خريطة ============ */
-  .contact{padding:100px 0}
-  .contact .grid{display:grid;grid-template-columns:1fr 1.2fr;gap:36px;align-items:stretch}
-  .form{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow)}
-  .form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .form label{display:block;font-size:13px;font-weight:700;color:var(--ink-2);margin:12px 0 6px}
-  .form input,.form select,.form textarea{width:100%;font-family:var(--font);font-size:14px;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg-2);outline:none;transition:.2s}
-  .form input:focus,.form textarea:focus,.form select:focus{border-color:var(--blue);background:#fff}
-  .form textarea{min-height:100px;resize:vertical}
-  .form .btn{margin-top:18px;width:100%;justify-content:center}
-  .map{border-radius:var(--r-lg);border:1px solid var(--line);position:relative;overflow:hidden;min-height:420px;
-    background-color:#f0f3f8;
-    background-image:linear-gradient(rgba(18,50,95,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(18,50,95,.08) 1px,transparent 1px),linear-gradient(35deg,transparent 48%,rgba(18,50,95,.1) 49%,rgba(18,50,95,.1) 51%,transparent 52%),linear-gradient(-25deg,transparent 48%,rgba(18,50,95,.08) 49%,rgba(18,50,95,.08) 51%,transparent 52%);
-    background-size:40px 40px,40px 40px,220px 220px,300px 300px}
-  .map .pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);text-align:center}
-  .map .pin i{display:block;width:22px;height:22px;background:var(--orange);border-radius:50% 50% 50% 0;transform:rotate(-45deg);margin:0 auto;box-shadow:0 8px 20px rgba(242,101,34,.5)}
-  .map .pin span{display:block;background:#fff;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--navy);box-shadow:var(--shadow);margin-top:10px;white-space:nowrap}
-  .map .info{position:absolute;right:16px;bottom:16px;left:16px;background:#fff;border-radius:12px;padding:14px 16px;display:flex;gap:22px;flex-wrap:wrap;box-shadow:var(--shadow);font-size:13px}
-  .map .info div b{display:block;color:var(--navy);font-size:12px}
-  .map .info div span{color:var(--ink-2)}
-
-  /* ============ Footer ============ */
-  footer{background:var(--navy-3);color:#c9d7ef;padding:64px 0 24px}
-  .foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:36px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.1)}
-  .foot .brand{color:#fff}
-  .foot p{font-size:14px;margin-top:12px;max-width:340px;color:#9fb3d4}
-  .foot h5{color:#fff;font-size:14px;margin-bottom:14px}
-  .foot ul li{margin-bottom:9px;font-size:14px}
-  .foot ul li a:hover{color:var(--orange)}
-  .socials{display:flex;gap:8px;margin-top:16px}
-  .socials a{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;font-size:12px;font-weight:800;transition:.2s}
-  .socials a:hover{background:var(--orange);border-color:var(--orange);color:#fff}
-  .copy{display:flex;justify-content:space-between;align-items:center;padding-top:20px;font-size:12px;color:#7f93b8;flex-wrap:wrap;gap:10px}
-  .copy .links{display:flex;gap:16px}
-  .totop{width:40px;height:40px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:900}
 
   /* ============ Reveal ============ */
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}
@@ -293,25 +149,12 @@
   /* ============ Responsive ============ */
   @media (max-width:1024px){
     .device-side{height:420px}.orbit{display:none}
-    .hero-grid,.trusted .grid,.why .grid,.contact .grid,.systems .head{grid-template-columns:1fr}
-    .sys-grid{grid-template-columns:repeat(2,1fr)}
-    .sys.featured{transform:none}
-    .plan-grid{grid-template-columns:1fr 1fr}
-    .ach .grid{grid-template-columns:1fr}
-    .tabs{flex-direction:row;overflow:auto}
-    .tab{white-space:nowrap}
-    .foot{grid-template-columns:1fr 1fr}
-    .hero-side{display:none}
+    .hero-grid{grid-template-columns:1fr}
   }
   @media (max-width:680px){
     .nav-links,.lang,.nav-cta .btn.outline{display:none}
     .burger{display:flex}
-    .hero{padding:44px 0}
-    .sys-grid,.plan-grid,.form .row,.panel{grid-template-columns:1fr}
-    .plan.pop{transform:none}
-    .foot{grid-template-columns:1fr}
-    .video .quote{font-size:16px}
-    section,.systems,.trusted,.why,.ach,.plans,.contact{padding:64px 0}
+    .hero{padding:24px 0;min-height:auto}
   }
 </style>
 </head>
@@ -452,219 +295,6 @@
   </div>
 </section>
 
-<!-- ============ الأنظمة (قسم داكن) ============ -->
-<section class="systems" id="systems">
-  <div class="container">
-    <div class="head reveal">
-      <div>
-        <span class="kicker">الأنظمة</span>
-        <h2 class="h2">مرحباً بكم في<br><span class="mark">عالم أنظمة Aura</span></h2>
-      </div>
-      <div>
-        <p>أنظمة مصممة لتناسب احتياجك — نقدّم منتجات جاهزة تعمل فوراً وتُخصَّص لكل قطاع: التجارة، المطاعم، العيادات، والمدارس.</p>
-        <div class="tools" style="margin-top:14px"><a href="#contact" class="btn white sm">كل الأنظمة ←</a></div>
-      </div>
-    </div>
-    <div class="sys-grid">
-      <div class="sys reveal">
-        <div class="img"><div class="pat"></div><span class="big">POS</span><span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg></span></div>
-        <div class="body"><h3>Aura POS — نقاط البيع</h3><p>نظام سريع للمطاعم والمتاجر يعمل بدون إنترنت، مع طباعة الفواتير وربط مباشر بالمخزون والمحاسبة.</p><span class="more">اعرف المزيد ←</span></div>
-      </div>
-      <div class="sys featured reveal">
-        <div class="img"><div class="pat"></div><span class="big">ERP</span><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span></div>
-        <div class="body"><h3>Aura ERP — حلول الشركات والمؤسسات</h3><p>المحاسبة، المخزون، المشتريات، المبيعات، والتقارير المالية في منصة واحدة تعمل عبر كل فروعك.</p><span class="more">اعرف المزيد ←</span></div>
-      </div>
-      <div class="sys reveal">
-        <div class="img"><div class="pat"></div><span class="big">HR</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div>
-        <div class="body"><h3>Aura HR — الموارد البشرية</h3><p>الحضور والانصراف، الإجازات، الرواتب، وتطبيق موبايل للموظفين مع تقارير فورية للإدارة.</p><span class="more">اعرف المزيد ←</span></div>
-      </div>
-    </div>
-    <div class="sys-more reveal"><span>Aura CRM</span><span>Aura Clinic</span><span>Aura School</span><span>Aura E-Commerce</span></div>
-  </div>
-</section>
-
-<!-- ============ الاسم الموثوق ============ -->
-<section class="trusted" id="about">
-  <div class="container">
-    <div class="grid">
-      <div class="reveal">
-        <span class="kicker o">من نحن</span>
-        <h2 class="h2">الاسم الموثوق في <span class="hi">الحلول البرمجية</span><br><span class="mark" style="font-size:.8em">في العراق</span></h2>
-        <ul class="list">
-          <li><span class="num">1</span><div><b>تأسست الشركة عام 2021 في بغداد</b>بفريق من 4 مهندسين، واليوم يضم 25 متخصصاً في التطوير والتصميم والدعم.</div></li>
-          <li><span class="num">2</span><div><b>أنظمة تعمل في عشرات الشركات</b>عبر قطاعات التجارة، الصحة، التعليم، المطاعم، والمقاولات في بغداد وأربيل والبصرة.</div></li>
-          <li><span class="num">3</span><div><b>شراكات مع بوابات الدفع والبنوك المحلية</b>لربط أنظمتنا مباشرة مع خدمات الدفع الإلكتروني والتحويلات.</div></li>
-        </ul>
-      </div>
-      <div class="video reveal">
-        <div class="play"></div>
-        <div class="brand-mini" style="font-weight:900">Aura Tech<small style="display:block;font-size:10px;color:#b4c3e0;font-weight:500;letter-spacing:.06em">SOFTWARE SOLUTIONS</small></div>
-        <div class="quote">رواد الحلول البرمجية داخل العراق</div>
-        <div class="who"><i>م</i><div>م. محمد الكرعاوي<small>المدير التنفيذي — Aura Tech</small></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ لماذا نحن ============ -->
-<section class="why" id="services">
-  <div class="container">
-    <div class="grid">
-      <div class="poster reveal">
-        <div class="brand-mini">Aura Tech<small>SOFTWARE SOLUTIONS</small></div>
-        <div class="giant">5</div>
-        <div class="txt">أكثر من<br>خمس <span>سنوات من الخبرة</span></div>
-      </div>
-      <div class="reveal">
-        <span class="kicker">خدماتنا</span>
-        <h2 class="h2">أكثر من <span class="hi">خمس سنوات</span><br>من الثقة والاستمرارية</h2>
-        <p class="lead" style="margin-top:10px">مسيرتنا تميزت بالجودة والالتزام تجاه عملائنا، ونعمل على تطوير خدماتنا باستمرار لتواكب احتياجات السوق وتقدم أفضل تجربة تقنية.</p>
-        <ul class="feat">
-          <li><span class="n">01</span><div><h4>تطوير أنظمة وتطبيقات مخصصة</h4><p>نحلّل عملياتك ونبني نظاماً يطابق طريقة عملك — ويب، موبايل، أو سطح مكتب.</p></div></li>
-          <li><span class="n">02</span><div><h4>حلول متكاملة تفوق التوقعات</h4><p>ربط الأنظمة ببوابات الدفع والبنوك والشحن والخدمات الخارجية عبر API.</p></div></li>
-          <li><span class="n">03</span><div><h4>استضافة ودعم فني أفضل</h4><p>نشر آمن على سحابة موثوقة، نسخ احتياطي يومي، ودعم فني على مدار الساعة.</p></div></li>
-          <li><span class="n">04</span><div><h4>تصميم واجهات UI/UX</h4><p>تصاميم واضحة وجذابة تبدأ من فهم المستخدم وتنتهي بنموذج تفاعلي.</p></div></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ الإنجازات ============ -->
-<section class="ach">
-  <div class="container">
-    <div class="center reveal">
-      <span class="kicker o">إنجازاتنا</span>
-      <h2 class="h2">أبرز الإنجازات والمشاريع مع كبرى الجهات</h2>
-    </div>
-    <div class="grid reveal">
-      <div class="tabs">
-        <div class="tab on" data-t="0"><i>01</i> مشروع Aura ERP — مجموعة الأفق</div>
-        <div class="tab" data-t="1"><i>02</i> منصة العيادات — Alpha Med</div>
-        <div class="tab" data-t="2"><i>03</i> نقاط البيع — مطاعم الرافدين</div>
-        <div class="tab" data-t="3"><i>04</i> منصة المدارس — دار السلام</div>
-      </div>
-      <div>
-        <div class="panel on"><div class="pic"><b>ERP</b></div><div><h3>مشروع Aura ERP — مجموعة الأفق</h3><p>ربط 3 فروع تجارية على نظام واحد للمخزون والمبيعات والمحاسبة، مع تقارير فورية للإدارة.</p><ul><li>تنفيذ خلال شهرين</li><li>3 فروع و 60 مستخدماً</li><li>الجرد الشهري من أسبوع إلى ساعة</li></ul></div></div>
-        <div class="panel"><div class="pic" style="background:linear-gradient(135deg,var(--orange),var(--red))"><b>Clinic</b></div><div><h3>منصة العيادات — Alpha Med</h3><p>إدارة 12 ألف ملف مريض، المواعيد، الوصفات، والفوترة عبر 4 عيادات.</p><ul><li>−60% وقت انتظار</li><li>تذكير بالمواعيد عبر واتساب</li><li>تقارير طبية ومالية</li></ul></div></div>
-        <div class="panel"><div class="pic"><b>POS</b></div><div><h3>نقاط البيع — مطاعم الرافدين</h3><p>8 فروع تعمل على Aura POS مع مخزون موحّد وطباعة فواتير وربط مع تطبيقات التوصيل.</p><ul><li>+35% مبيعات</li><li>يعمل بدون إنترنت</li><li>لوحة تحكم مركزية</li></ul></div></div>
-        <div class="panel"><div class="pic" style="background:linear-gradient(135deg,var(--blue),var(--navy))"><b>School</b></div><div><h3>منصة المدارس — دار السلام</h3><p>1,200 طالب، الدرجات، الجداول، الأقساط، وبوابة لأولياء الأمور.</p><ul><li>تطبيق موبايل لأولياء الأمور</li><li>إشعارات فورية</li><li>تقارير الأداء</li></ul></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ الباقات ============ -->
-<section class="plans">
-  <div class="container">
-    <div class="center reveal">
-      <span class="kicker">الباقات</span>
-      <h2 class="h2">باقات الأنظمة لـ <span class="mark">كل حجم</span> عمل</h2>
-      <p class="lead">اختر الباقة المناسبة لفريقك — وترقّ في أي وقت مع نمو أعمالك.</p>
-    </div>
-    <div class="plan-grid">
-      <div class="plan reveal">
-        <span class="tier">ENTERPRISE</span>
-        <div class="name"><span>مستخدم</span><b>∞</b></div>
-        <div class="sub">للمؤسسات الكبيرة</div>
-        <p class="desc">فروع غير محدودة، تخصيص كامل، وخادم خاص.</p>
-        <div class="specs"><div>الفروع<b>∞</b></div><div>الدعم<b>مخصص</b></div></div>
-        <ul><li>جميع الوحدات</li><li>تكامل API كامل</li><li>مدير حساب</li></ul>
-        <div class="price"><span>حسب الطلب</span></div>
-        <a href="#contact" class="btn outline">اتصل بنا</a>
-        <div class="note">عرض سعر مخصص</div>
-      </div>
-      <div class="plan reveal">
-        <span class="tier">BUSINESS</span>
-        <div class="name"><span>مستخدم</span><b>50</b></div>
-        <div class="sub">للشركات المتوسطة</div>
-        <p class="desc">حتى 5 فروع مع كل الوحدات الأساسية.</p>
-        <div class="specs"><div>الفروع<b>5</b></div><div>الدعم<b>24/7</b></div></div>
-        <ul><li>ERP + POS + HR</li><li>تقارير متقدمة</li><li>نسخ احتياطي يومي</li></ul>
-        <div class="price"><b>650,000</b><span>د.ع / شهرياً</span></div>
-        <a href="#contact" class="btn outline">اتصل بنا</a>
-        <div class="note">تجربة مجانية 14 يوماً</div>
-      </div>
-      <div class="plan pop reveal">
-        <span class="ribbon">الأكثر طلباً</span>
-        <span class="tier">GROWTH</span>
-        <div class="name"><span>مستخدم</span><b>20</b></div>
-        <div class="sub">للشركات النامية</div>
-        <p class="desc">فرعان مع المخزون والمبيعات والمحاسبة.</p>
-        <div class="specs"><div>الفروع<b>2</b></div><div>الدعم<b>أولوية</b></div></div>
-        <ul><li>ERP + POS</li><li>تطبيق موبايل</li><li>تدريب الفريق</li></ul>
-        <div class="price"><b>350,000</b><span>د.ع / شهرياً</span></div>
-        <a href="#contact" class="btn primary">اتصل بنا</a>
-        <div class="note">تجربة مجانية 14 يوماً</div>
-      </div>
-      <div class="plan reveal">
-        <span class="tier">STARTER</span>
-        <div class="name"><span>مستخدمين</span><b>5</b></div>
-        <div class="sub">للمتاجر الصغيرة</div>
-        <p class="desc">فرع واحد مع نقاط البيع والمخزون.</p>
-        <div class="specs"><div>الفروع<b>1</b></div><div>الدعم<b>عادي</b></div></div>
-        <ul><li>POS + مخزون</li><li>فواتير وطباعة</li><li>تقارير أساسية</li></ul>
-        <div class="price"><b>150,000</b><span>د.ع / شهرياً</span></div>
-        <a href="#contact" class="btn outline">اتصل بنا</a>
-        <div class="note">تجربة مجانية 14 يوماً</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ تواصل ============ -->
-<section class="contact" id="contact">
-  <div class="container">
-    <div class="center reveal">
-      <span class="kicker o">اتصل بنا</span>
-      <h2 class="h2">ابقَ على <span class="hi">تواصل</span></h2>
-      <p class="lead">أخبرنا عن مشروعك وسنعود إليك خلال 24 ساعة بخطة واضحة وعرض سعر.</p>
-    </div>
-    <div class="grid" style="margin-top:40px">
-      <form class="form reveal" onsubmit="event.preventDefault();alert('شكراً! سنتواصل معك قريباً.')">
-        <div class="row">
-          <div><label>الاسم الكامل</label><input type="text" placeholder="اسمك"></div>
-          <div><label>رقم الهاتف</label><input type="tel" placeholder="+964 7xx xxx xxxx"></div>
-        </div>
-        <label>اسم الشركة</label><input type="text" placeholder="شركتك">
-        <label>النظام المطلوب</label>
-        <select><option>Aura ERP</option><option>Aura POS</option><option>Aura HR</option><option>Aura CRM</option><option>تطوير مخصص</option></select>
-        <label>تفاصيل المشروع</label><textarea placeholder="أخبرنا باختصار عن احتياجك..."></textarea>
-        <button class="btn primary" type="submit">إرسال الطلب ←</button>
-      </form>
-      <div class="map reveal">
-        <div class="pin"><i></i><span>Aura Tech — بغداد، الكرادة</span></div>
-        <div class="info">
-          <div><b>الهاتف</b><span dir="ltr">+964 770 000 0000</span></div>
-          <div><b>البريد</b><span>info@auratech.iq</span></div>
-          <div><b>الدوام</b><span>السبت – الخميس، 9ص – 6م</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ Footer ============ -->
-<footer>
-  <div class="container">
-    <div class="foot">
-      <div>
-        <a href="#home" class="brand"><span>Aura<b>_</b>Tech</span></a>
-        <p>نبني أنظمة وتطبيقات تساعد الشركات العراقية على النمو بثقة — من الفكرة إلى الإطلاق وما بعده.</p>
-        <div class="socials"><a href="#">in</a><a href="#">ig</a><a href="#">f</a><a href="#">X</a></div>
-      </div>
-      <div><h5>الشركة</h5><ul><li><a href="#about">من نحن</a></li><li><a href="#services">خدماتنا</a></li><li><a href="#">الوظائف</a></li><li><a href="#contact">اتصل بنا</a></li></ul></div>
-      <div><h5>الأنظمة</h5><ul><li><a href="#systems">Aura ERP</a></li><li><a href="#systems">Aura POS</a></li><li><a href="#systems">Aura HR</a></li><li><a href="#systems">Aura CRM</a></li></ul></div>
-      <div><h5>تواصل معنا</h5><ul><li>بغداد، الكرادة — العراق</li><li dir="ltr" style="text-align:right">+964 770 000 0000</li><li>info@auratech.iq</li></ul></div>
-    </div>
-    <div class="copy">
-      <span>© 2026 Aura Tech. جميع الحقوق محفوظة</span>
-      <div class="links"><a href="#">سياسة الخصوصية</a><a href="#">شروط الخدمة</a><a href="#">اتفاقية مستوى الخدمة</a></div>
-      <a href="#home" class="totop">↑</a>
-    </div>
-  </div>
-</footer>
-
 <script>
   // ===== خلفية الهيرو: خيوط ألياف ضوئية متموجة مع نبضات ضوء تسير عليها =====
   (function(){
@@ -696,7 +326,7 @@
     function resize(){
       isMobile=innerWidth<768;reduced=isMobile||prefersReduced;step=isMobile?14:6;
       W=wrap.offsetWidth||innerWidth;H=wrap.offsetHeight||innerHeight;
-      dpr=isMobile?1:Math.min(devicePixelRatio||1,1.5);
+      dpr=1; // دقة 1x تكفي للخطوط الرفيعة وتقلل كلفة الرسم للنصف
       cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
       // في الوضع الثابت نرسم مرة واحدة؛ وإلا نضمن أن الحلقة تعمل
       if(reduced){cancelAnimationFrame(raf);raf=0;draw(0)}else if(!raf){raf=requestAnimationFrame(loop)}
